@@ -1,0 +1,29 @@
+# Local environments and Python caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.DS_Store
+
+# Never push downloaded dataset files or generated results by default
+data/raw/*
+!data/raw/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.env
+.env.*
+!.env.example
+data/raw/*
+!data/raw/.gitkeep
+data/interim/
+data/processed/
+outputs/*
+!outputs/.gitkeep
+*.zip
