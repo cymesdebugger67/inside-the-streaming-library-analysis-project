@@ -83,3 +83,25 @@ The notebook is `notebooks/integrated_research.ipynb` (use Run All after generat
 - Before GitHub main-branch release, independently inspect figures and the expanded notebook, reproduce the pipeline, review all tracked files and licensing/attribution, and verify public owner credit. **Do not upload the entire local working directory**, including `.git`, raw source CSV and cached outputs, as a release artifact.
 
 **Project owner:** Cyril James Lunzaga
+## Advanced Analytical Atlas — additional research
+
+This repository also includes **eight further research tables, six reproducible analytical figures, a separate interactive analytical atlas, and a 17-cell research notebook**. These extend the reviewed overlap, Shapley and Shannon analyses instead of replacing them. All results come from the same undated historical movie source.
+
+![Release-era composition](assets/advanced/release_era_composition.png)
+
+![Genre specialization](assets/advanced/genre_specialization_heatmap.png)
+
+![Rotten Tomatoes coverage by era](assets/advanced/score_coverage_heatmap.png)
+
+Highlights from the archived data: Netflix's 2010–2020 share is **83.48%**, versus **51.47%** for Prime Video. Disney+ has a **Family** genre prevalence ratio of approximately **8.43×** the unique-source union rate. Recorded Rotten Tomatoes coverage for 2010–2020 movies varies from **27.28%** for Prime Video to **70.14%** for Hulu. These are descriptive differences within the archived records, not up-to-date catalogue statistics or quality rankings.
+
+The release-era standardized IMDb comparison is an additional *observed-only sensitivity exercise*: it applies the unique-source pooled film release-era weights to each platform's era-specific observed scores. Missing-score selection remains unadjusted; no causal or quality claim follows.
+
+- Method definitions and limitations: [`docs/advanced_analytical_atlas.md`](docs/advanced_analytical_atlas.md)
+- Source-grounded expanded findings: [`docs/advanced_findings.md`](docs/advanced_findings.md)
+- All six figures: [`assets/advanced/`](assets/advanced/)
+- Notebook: [`notebooks/advanced_analytical_atlas.ipynb`](notebooks/advanced_analytical_atlas.ipynb)
+- Generate tables, charts and QA: `python -m streaming_library.advanced_analysis`
+- Open the analytical atlas: `python -m streamlit run streaming_library/advanced_dashboard.py`
+
+The `outputs/phase08_advanced/` folder is generated locally and excluded from Git; tracked plots are derived visual artifacts, not redistributed raw third-party source records.
