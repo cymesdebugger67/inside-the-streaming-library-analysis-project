@@ -1,69 +1,107 @@
 # Inside the Streaming Library
 
-Historical streaming movie catalogue analysis | **Cyril James Lunzaga**
+**Historical streaming catalogue analytics**
+**Project owner:** Cyril James Lunzaga
 
 ## Research purpose
 
-How do the movie catalogues represented in one archived, undated four-platform dataset differ in recorded size, overlap, release-year composition, multi-label genres, observed ratings, runtime, and genre-tag diversity? The unit is a *source movie record*; platforms are overlapping membership flags, not independent viewing samples.
+A reproducible, descriptive investigation of catalogue coverage, overlap, genre variety, observed scores, metadata completeness and release-year composition across four recorded streaming platform flags. It asks whether membership count, unique represented movie records, and genre diversity tell the same story. This study analyzes **one undated, historical source snapshot**; it does not describe current platform availability, viewership, subscriber preferences, market share, longitudinal catalogue growth or causal effects.
 
-This study **does not** estimate current availability, subscriber behavior, audience preferences, market share, platform catalogue growth, or the causal effects of platform decisions.
+## Provenance and unit of analysis
 
-## Verified source and scope
+- Original dataset attribution: [Ruchi Bhatia — Movies on Netflix, Prime Video, Hulu and Disney+](https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney).
+- Analyzed 17-column mirror: [SalimAmarti/OTT_movies_Project](https://github.com/SalimAmarti/OTT_movies_Project/blob/master/MoviesOnStreamingPlatforms_updated.csv).
+- Download exact input: `https://raw.githubusercontent.com/SalimAmarti/OTT_movies_Project/master/MoviesOnStreamingPlatforms_updated.csv`.
+- Raw file SHA-256: `c7a1b949495c35879b038c97f92bbe233d1b0b348719f3d4a8020927645c0c27`.
+- Local path: `data/raw/historical_streaming_movies.csv` (Git-ignored; not included in this repository).
+- Observation date is unknown. The mirror is not interchangeable with a current version of the source's Kaggle listing. Review third-party usage/redistribution terms separately before sharing source data.
+- Source movie ID represents one archived record, **not** an independently verified global work ID. The 16,744 unique source records carry 17,381 non-exclusive platform flags.
 
-- Original attribution: Ruchi Bhatia, [Movies on Netflix, Prime Video, Hulu and Disney+](https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney).
-- Exact retrieval mirror: [SalimAmarti/OTT_movies_Project](https://github.com/SalimAmarti/OTT_movies_Project/blob/master/MoviesOnStreamingPlatforms_updated.csv).
-- CSV URL: `https://raw.githubusercontent.com/SalimAmarti/OTT_movies_Project/master/MoviesOnStreamingPlatforms_updated.csv`
-- SHA-256: `c7a1b949495c35879b038c97f92bbe233d1b0b348719f3d4a8020927645c0c27`
-- The file contains **16,744 movie records and 17 header fields**, one of which is an unnamed index-like field. The snapshot's precise observation date is not independently established.
-- Four non-exclusive platform flags: Netflix (3,560), Hulu (903), Prime Video (12,354), Disney+ (564); 627 movies have multiple flags.
-- Data are sourced from a third-party historical mirror; do not assume the contemporary Kaggle download has the same schema or contents. Attribution and redistribution terms require separate release review.
+## Pipeline and analytical coverage
 
-Raw CSVs and locally generated outputs are Git-ignored. This repository does not redistribute the input data.
-
-## Methods and deliverables
-
-| Stage | Implementation | Result |
+| Phase | Methods and outputs | Review status |
 |---|---|---|
-| Source audit | `streaming_library/source_audit.py` | Schema, source fingerprint, missingness, historical viability manifest |
-| Preparation | `streaming_library/preparation.py` | One-row-per-film table, platform-membership table, genre-assignment table, parsing and integrity checks |
-| EDA | `streaming_library/eda.py`, `visualizations.py` | Release-era and runtime features, catalogue overlap, multi-label genre prevalence, descriptive tables and figures |
-| Comparative analysis | `streaming_library/comparative.py`, `comparative_figures.py` | Directional overlap, fractional genre diversity, release-era metric coverage, missingness-aware comparisons |
-| Quality assurance | `tests/` and stage QA manifests | 38 unit tests passed at the Phase 04 review; hashes and numeric reconciliation checked |
+| 01 | Source viability, 17-column schema, SHA-256, provenance | Reviewed |
+| 02 | Record-level cleaning, platform membership and genre tables, invalid/missing-value validation | Reviewed |
+| 03 | EDA, release-era mix, ratings, runtime, multi-label genre prevalence and figures | Reviewed |
+| 04 | Directional/Jaccard overlap, Simpson diversity and metadata completeness comparisons | Reviewed |
+| 05 | Country/language label normalization, recorded exclusivity, corrected literal `None` language sentinel | Reviewed |
+| 06 | Integrated report, notebook, interactive Streamlit dashboard | Local tests and user execution reviewed |
+| 07A | Exact 16-coalition Shapley, Shannon diversity sensitivity and equal-size resampling | 79-test local and output review passed |
+| 07B–C | Comprehensive final report, documentation, clean reproduction and controlled release | Final release signoff pending |
 
-Methods, field definitions, and limitations are described in `docs/phase01_source_review.md`, `docs/phase02_preparation_method.md`, `docs/phase03_eda_method.md`, and `docs/phase04_comparative_method.md`. A narrative notebook is at `notebooks/inside_streaming_library.ipynb`; it currently presents a lightweight walkthrough, not the final report.
+Core methods are implemented in `streaming_library/` with tests in `tests/`. Explanations and research design are in `docs/`. Narrative notebook: `notebooks/integrated_research.ipynb`. Local dashboard: `streaming_library/dashboard.py`.
 
-## Reproduce from a clean checkout
+## Key source-level findings
 
-Run from the project root with Python and Matplotlib installed. Core calculation stages use the Python standard library. Matplotlib is needed for charts. Install dependencies into an appropriate environment with `python -m pip install -r requirements.txt` (availability of wheels depends on the Python version and platform).
+- Platform memberships: **Netflix 3,560**, **Hulu 903**, **Prime Video 12,354**, **Disney+ 564**. They sum to **17,381**, not 16,744, because 627 records appear on more than one represented platform.
+- Exact Shapley source-record allocations: **Netflix 3,372.667**, **Hulu 769.500**, **Prime Video 12,054.500**, **Disney+ 547.333** (sum **16,744**). This is fractional accounting of the represented union, not market share, commercial value or exclusive rights.
+- Recorded country labels exist for 16,309 source movie records and at least one named-language label for 16,130. Source `None` language tokens are excluded from *named-language* analyses, not altered in the raw file.
+- Only **5,158 / 16,744** source records have an observed Rotten Tomatoes value. Observed rating means are not platform-quality comparisons.
+- Shannon effective genre diversity changes under alternative multi-label weighting rules. Equal-size draws of 564 source records per platform (200 each) are descriptive size-sensitivity, not population uncertainty intervals; Disney+ draws include the whole represented catalogue each time.
 
-Place the exact downloaded mirror at `data/raw/historical_streaming_movies.csv` and independently verify its SHA-256 before running. Then execute in order:
+The source-grounded comprehensive findings are generated locally by `python -m streaming_library.final_research`. This report, tables and figures are intentionally ignored by Git; see the reproduction instructions below. The calculations should not be interpreted beyond the source snapshot.
+
+## Reproduce locally
+
+Python 3.9+ is supported by the core standard-library analytics code (the project has also been exercised in later Python environments). Matplotlib generates PNG figures; Streamlit is optional for the dashboard. Use an isolated virtual environment where practical.
 
 ```powershell
-python -m unittest discover -s tests -p "test_*.py" -q
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-dashboard.txt
+```
+
+Download the **exact** source mirror into `data/raw/historical_streaming_movies.csv` and verify the stated SHA-256; do not substitute another release with different columns or ordering. Run in a fresh workspace (or archive existing `outputs/` first):
+
+```powershell
 python -m streaming_library.source_audit
 python -m streaming_library.preparation
 python -m streaming_library.eda
 python -m streaming_library.comparative
-python analysis.py
+python -m streaming_library.metadata_analytics --output-dir outputs/phase05_metadata_reviewed
 ```
 
-**Important:** each stage creates local outputs; Phase 02–04 deliberately refuse to overwrite existing stage folders. Use a fresh workspace for a full rerun, or inspect and archive the old outputs before intentionally rebuilding a stage. The source audit also writes `docs/phase01_source_review.md`; check `git diff` after a fresh acquisition. `python analysis.py` checks QA manifests and generated-file hashes without changing anything.
+The above command generates corrected historical language-sentinel outputs into `outputs/phase05_metadata_reviewed` (not the original Phase 05 folder). Consult `docs/phase05_metadata_method.md` for the accepted token policy. Then run:
 
-Outputs are saved under `outputs/` and are ignored by Git. Do not treat successful unit tests alone as proof of scientific validity. Review every generated visualization, interpretation, provenance claim, and publication artifact separately.
+```powershell
+python -m streaming_library.integrated
+python -m streaming_library.phase07_methods
+python -m streaming_library.final_research
+python -m unittest discover -s tests -p "test_*.py" -q
+python analysis.py
+python -m streamlit run streaming_library/dashboard.py
+```
 
-## Selected observations from the reviewed historical snapshot
+The notebook is `notebooks/integrated_research.ipynb` (use Run All after generating outputs). Each stage refuses to overwrite its output directory. The source audit can update `docs/phase01_source_review.md`; inspect Git changes if reproducing it in a working checkout. The final report writes `outputs/phase07_final/research_findings.md`. Do not assume `analysis.py` alone revalidates Phases 05–07: those are additionally checked by later modules and the final report generator.
 
-- 16,744 source records correspond to 17,381 platform memberships; memberships are **not** unique cross-platform film counts.
-- 39,098 genre assignments were extracted; genre percentages are non-exclusive and must use stated denominators.
-- Only 5,158 source records have Rotten Tomatoes metadata; missingness substantially limits score comparisons. Do not rank platforms by observed ratings without explicitly describing coverage.
-- One source runtime (`Colorado`, 1940, source ID `13180`, value `1256`) violates the project's declared runtime validation range and is left missing in numeric calculations rather than silently corrected.
+## QA, interpretation, and release controls
 
-Additional numeric tables and charts are local outputs. They should be promoted to the public report only after their final presentation review and reproducibility check.
-
-## Limitations and release status
-
-The archive is not a probability sample of services, films, or dates; platform memberships overlap; titles are distinguished by source identities; genres may have multiple tags; source metadata and observed ratings have missingness; and release years do not indicate when titles joined streaming services. Statistical significance, current market conclusions, or causal claims are not justified from this source alone.
-
-**Status:** Phases 01–04 have completed technical/analytical review. Final notebook, visualization consolidation, source-code/security review, licensing assessment, reproducibility verification, and controlled Git release remain pending.
+- Core dataset: 16,744 source records, 17,381 non-exclusive memberships, 39,098 genre assignments. Input and stage outputs have SHA-256 fingerprints.
+- The project deliberately leaves an implausible source runtime of 1,256 minutes (Colorado, 1940, source ID 13180) invalid for numeric analysis rather than guessing a correction.
+- Source labels are imperfect and sometimes multi-valued. Country labels do not establish streaming geography; language labels do not establish audio availability; film release year is not platform listing date.
+- Rated and unrated subsets differ. Averages are observed-only. Equal-size resampling and overlap statistics are descriptive, not external significance tests.
+- Before GitHub main-branch release, independently inspect figures and the expanded notebook, reproduce the pipeline, review all tracked files and licensing/attribution, and verify public owner credit. **Do not upload the entire local working directory**, including `.git`, raw source CSV and cached outputs, as a release artifact.
 
 **Project owner:** Cyril James Lunzaga
+## Advanced Analytical Atlas — additional research
+
+This repository also includes **eight further research tables, six reproducible analytical figures, a separate interactive analytical atlas, and a 17-cell research notebook**. These extend the reviewed overlap, Shapley and Shannon analyses instead of replacing them. All results come from the same undated historical movie source.
+
+![Release-era composition](assets/advanced/release_era_composition.png)
+
+![Genre specialization](assets/advanced/genre_specialization_heatmap.png)
+
+![Rotten Tomatoes coverage by era](assets/advanced/score_coverage_heatmap.png)
+
+Highlights from the archived data: Netflix's 2010–2020 share is **83.48%**, versus **51.47%** for Prime Video. Disney+ has a **Family** genre prevalence ratio of approximately **8.43×** the unique-source union rate. Recorded Rotten Tomatoes coverage for 2010–2020 movies varies from **27.28%** for Prime Video to **70.14%** for Hulu. These are descriptive differences within the archived records, not up-to-date catalogue statistics or quality rankings.
+
+The release-era standardized IMDb comparison is an additional *observed-only sensitivity exercise*: it applies the unique-source pooled film release-era weights to each platform's era-specific observed scores. Missing-score selection remains unadjusted; no causal or quality claim follows.
+
+- Method definitions and limitations: [`docs/advanced_analytical_atlas.md`](docs/advanced_analytical_atlas.md)
+- Source-grounded expanded findings: [`docs/advanced_findings.md`](docs/advanced_findings.md)
+- All six figures: [`assets/advanced/`](assets/advanced/)
+- Notebook: [`notebooks/advanced_analytical_atlas.ipynb`](notebooks/advanced_analytical_atlas.ipynb)
+- Generate tables, charts and QA: `python -m streaming_library.advanced_analysis`
+- Open the analytical atlas: `python -m streamlit run streaming_library/advanced_dashboard.py`
+
+The `outputs/phase08_advanced/` folder is generated locally and excluded from Git; tracked plots are derived visual artifacts, not redistributed raw third-party source records.

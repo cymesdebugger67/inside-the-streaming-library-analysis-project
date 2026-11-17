@@ -1,5 +1,3 @@
-"""Prepare auditable historical movie catalogue tables from the Phase 01 source."""
-
 from __future__ import annotations
 
 import argparse

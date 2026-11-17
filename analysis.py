@@ -1,4 +1,3 @@
-"""Read-only integrity and progress check for the historical streaming analysis."""
 from __future__ import annotations
 
 import hashlib

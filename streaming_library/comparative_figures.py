@@ -1,4 +1,3 @@
-"""Comparative figures: categorical displays and observational coverage."""
 from pathlib import Path
 
 

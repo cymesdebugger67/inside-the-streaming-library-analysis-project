@@ -1,4 +1,3 @@
-"""Static publication-review figures for historical movie catalogues."""
 from pathlib import Path
 
 
