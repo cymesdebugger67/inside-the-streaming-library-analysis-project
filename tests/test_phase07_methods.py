@@ -1,4 +1,3 @@
-"""Independent analytical properties of exact catalogue attribution."""
 import math
 import unittest
 from streaming_library.phase07_methods import (incidence, exact_coalitions, exact_shapley,

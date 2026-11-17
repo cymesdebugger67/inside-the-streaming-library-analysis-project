@@ -1,4 +1,3 @@
-"""Historical catalogue comparison with multi-label and missingness safeguards."""
 from __future__ import annotations
 
 import argparse

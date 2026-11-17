@@ -1,4 +1,3 @@
-"""Publication-review figures for historical multi-valued metadata."""
 from pathlib import Path
 
 

@@ -1,7 +1,3 @@
-"""Exact historical catalogue attribution and genre-diversity sensitivity.
-
-All values describe the archived source records, not contemporary libraries.
-"""
 from __future__ import annotations
 
 import argparse

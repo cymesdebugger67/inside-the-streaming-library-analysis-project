@@ -1,4 +1,3 @@
-"""Historical movie metadata extraction and marginal catalogue contributions."""
 from __future__ import annotations
 
 import argparse

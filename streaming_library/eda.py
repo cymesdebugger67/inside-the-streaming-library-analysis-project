@@ -1,4 +1,3 @@
-"""Auditable descriptive analysis of historical platform movie memberships."""
 from __future__ import annotations
 
 import argparse

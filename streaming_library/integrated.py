@@ -1,4 +1,3 @@
-"""Read-only, hash-verified integrated reporting over historical movie catalogue outputs."""
 from __future__ import annotations
 
 import argparse
