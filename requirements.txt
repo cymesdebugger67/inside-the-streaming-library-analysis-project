@@ -1,0 +1,3 @@
+# Phase 01–04 calculations use Python's standard library.
+# Matplotlib is required for the generated PNG figures.
+matplotlib>=3.7,<4

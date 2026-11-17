@@ -1,62 +1,41 @@
-﻿# Inside the Streaming Library — Project Roadmap
+# Inside the Streaming Library — Project Roadmap
 
-Owner: Cyril James Lunzaga
-
-Target duration: Five intensive working hours.
+**Project owner:** Cyril James Lunzaga
 
 ## Research direction
 
-Investigate historical streaming-library overlap, content diversity, catalogue concentration and platform differentiation.
+Understand historical streaming movie catalogue composition, overlap, marginal coverage, genre diversity, and metadata completeness. Preserve the unverified historical snapshot-date limitation and distinguish descriptive source-level comparisons from external inference.
 
-All analytical claims must be supported by verified data.
+## Progress as of 2026-11-17
 
-## Timeline
+| Milestone | Scope | State |
+|---|---|---|
+| 00 | Repository and Git baseline | Local baseline verified; release not finalized |
+| 01 | Acquisition, source fingerprint and provenance | Completed; independently reviewed |
+| 02 | Three-grain preparation, parsing and data QA | Completed; independently reviewed |
+| 03 | Descriptive feature engineering, EDA and five figures | Completed; reviewed, final visual polish pending |
+| 04 | Directional overlap, genre diversity and stratified comparisons | Completed; reviewed, final visual polish pending |
+| 05 | Country/language quality and feature extraction, advanced analyses | Planned |
+| 06 | Research notebook, interactive exploration and report | Planned |
+| 07 | Full rerun, tests, security, licensing and controlled Git publication | Pending |
 
-| Phase | Budget | Scope | Status |
-|---|---|---|---|
-| 00 | 20 minutes | Git initialization, GitHub connection, roadmap | In progress |
-| 01 | 45 minutes | Dataset viability, provenance and research design | Pending |
-| 02 | 55 minutes | Data ingestion, cleaning, feature engineering, QA | Pending |
-| 03 | 85 minutes | Statistical methods, matrix algorithms, justified ML | Pending |
-| 04 | 55 minutes | Research notebook, visualizations, findings, README | Pending |
-| 05 | 40 minutes | Tests, security review, Git release, publication | Pending |
+The 38-test suite passed during the Phase 04 local execution and separately from the uploaded source review. This is not yet a final code, visualization or publication sign-off.
 
-## Development requirements
+## Non-negotiable research controls
 
-- Sole public author: Cyril James Lunzaga
-- Meaningful lowercase_snake_case filenames
-- No explanatory comments, decorative headings or docstrings in Python modules
-- Required executable Jupyter notebook
-- Real datasets with source provenance and validation
-- Independent numerical and statistical verification
-- Distinctive mathematical and algorithmic methodology
-- No unnecessary complexity or decorative folder inflation
-- No fabricated findings or unsupported claims
-- Local datasets, intermediate files and secrets excluded from Git
+- One row per source ID for movies, distinct platform-membership and genre-assignment tables
+- Explicit denominators for overlapping platforms and multi-label tags
+- Missing rating and runtime observations are not imputed or interpreted as zero
+- Release year is not the platform-listing or catalogue-entry date
+- No statements about present-day availability, viewing behavior, subscriptions, causal effects or market share
+- Statistical comparisons and feature selection only when there is a defensible question, sampling caveat and evaluation design
+- Preserve original input fingerprints and stage-level output hashes
+- Public authorship credits Cyril James Lunzaga
 
-## Analytical methods to evaluate
+## Next checkpoints
 
-- Title-platform incidence matrices
-- Pairwise catalogue similarity
-- Jaccard overlap
-- Shannon genre diversity
-- Effective diversity and concentration
-- Bootstrap uncertainty
-- Optional predictive modelling subject to data viability
-
-## Milestone protocol
-
-At each checkpoint, record:
-
-- Completed implementation
-- Source and QA evidence
-- Test results
-- Research decisions
-- Limitations
-- Next planned phase
-
-The project will not claim current streaming availability based on historical catalogue snapshots.
-
-## Publication gate
-
-GitHub publication requires validated code, notebook execution, reviewed figures, accurate research claims and explicit source attribution.
+1. Repair the inherited README, stale Netflix-specific entry point, dependency specification, source field count and starter notebook.
+2. Review the repository diff and ensure raw data, caches and generated outputs remain Git-ignored.
+3. Create a controlled milestone commit **only after** these repairs pass review; separately decide when to push.
+4. Design Phase 05 based on documented country/language tokenization and a specific analytic question, rather than on folder count.
+5. Consolidate reviewed visuals, analytical findings, notebook, data dictionary and end-to-end reproducibility instructions before final publication.
