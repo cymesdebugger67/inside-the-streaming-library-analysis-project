@@ -1,36 +1,25 @@
-# Research Design — The Catalogue Differentiation Problem
+# Research Design — Historical Streaming Catalogue Differentiation
 
 **Project owner:** Cyril James Lunzaga
 
-## Core question
+## Question and scope
 
-Does a larger historical streaming movie catalogue yield proportionally broader choices, or mainly additional overlap and genre concentration?
+How do historically represented catalogue size, unique coverage, overlap and recorded genre variety compare among four platform flags? The source is an undated, third-party historical CSV mirror. The unit is its source movie ID, not a globally verified work identifier. Release year is the film release year, **not** the platform catalogue listing date. This dataset is not a probability sample, usage study, or contemporaneous market survey.
 
-## Units of analysis
+## Implemented estimands and validation
 
-A movie title-year key is the initial candidate identity, not a guaranteed global film identifier. Duplicate titles, alternate cuts and conflicting rows will be audited before choosing reconciliation rules. Historical platform flags are membership indicators, not observed viewing.
+1. **Source and identity controls:** preserve 16,744 source movie rows and unique title-year keys as recorded; validate 17,381 non-exclusive memberships and missing/invalid metadata without imputing ratings or runtime.
+2. **Union and overlap:** calculate pairwise Jaccard and directional overlaps; report denominators for each overlap and all 16 possible four-platform coalitions.
+3. **Marginal coverage:** distinguish leave-one-out union loss (exclusive records) from exact factorial-weighted **Shapley movie-equivalent allocation** across all coalitions. Each movie shared across k platforms contributes 1/k to each.
+4. **Genre variety:** use multi-label genre tags, fractional per-movie weighting and full-tag weighting, Shannon entropy, exp(Shannon) effective genres and inverse-Simpson diversity; report genre-known coverage.
+5. **Size sensitivity:** draw equal-size 564-movie subsamples without replacement from each platform's recorded source IDs (200 draws/platform; fixed seed 20261117). This is within-source descriptive sensitivity, not inferential evidence or a confidence interval. Disney+ draws always include its entire 564-movie source set.
+6. **Historical metadata:** describe corrected country and named-language label coverage. Literal `None` language tokens do not count as named languages; original source strings remain available.
+7. **Observed scores:** compare descriptive coverage and observed means only with explicit missingness and selection-bias caveats. No platform-quality ranking.
 
-## Intended analyses
+## Proposed methods intentionally not used
 
-1. **Coverage and overlap:** Four-platform binary incidence matrix; intersections, unions and Jaccard similarity. Check computational equivalence between set operations and the binary matrix.
-2. **Marginal catalogue contribution:** Exhaustively enumerate all 16 platform subsets, measure unique title coverage, calculate marginal gains and exact Shapley allocations. With only four platforms, exact enumeration is more transparent than approximating contributions using machine learning.
-3. **Genre variety:** Split multi-label genre strings; use an explicit fractional-assignment denominator to compute Shannon entropy, effective genre count and concentration. Report a sensitivity calculation using an alternative genre allocation rule.
-4. **Fair platform comparison:** Equal-size title resampling and calendar or stratified matching where feasible; do not equate raw catalogue size with variety.
-5. **Uncertainty:** Bootstrap at the title level while preserving overlapping membership vectors. State that intervals describe source-snapshot sampling sensitivity, not a random sample of all platforms or all dates.
-6. **Predictive model gate:** Optionally benchmark a regularized multilabel classifier only if reliable title-level labels and held-out group splits make model evaluation meaningful. Explicitly compare against label-prevalence baselines and avoid treating membership prediction as demand or personalized recommendation.
+The original proposal discussed title-level bootstrap intervals, calendar matching and a regularized multi-label classifier. Bootstrapping would quantify resampling variation inside this historical non-probability source, **not** confidence about service populations, and is omitted in favor of clearly identified equal-size sensitivity. Platform membership labels are not demand or user-preference outcomes, so the predictive-model gate is not met. Release-year matching is not pursued as a separate inferential analysis; release-era composition and metadata coverage are already reported as descriptive confounders. These are explicit scope choices, not claims that the methods were performed.
 
-## Caveats before analysis
+## Reporting and quality policy
 
-- Validate raw header and source-record count instead of assuming 16,744.
-- Resolve or transparently flag duplicate title-year identities.
-- Audit genre and score missingness, including by platform.
-- Never treat missing scores as zero or compare only complete cases without a selection-bias warning.
-- Do not attempt any causal claims.
-
-## Portfolio differentiator
-
-Exact Shapley decomposition provides a principled explanation of catalogue contribution across overlapping platform sets. The project is an analytical study, not a large deployed application. A notebook is a mandatory narrative companion to modular code and tests.
-
-## Execution plan
-
-Source audit -> cleaning/identity resolution -> exact matrix analysis -> genre diversity and sensitivity -> optional justified ML -> notebook and figures -> final Git/security review.
+Retain dataset fingerprint, stage QA hashes, tests, reproducibility instructions and author attribution. Do not interpret membership flags as present-day platform availability, streaming market share, subscriber behavior, rights exclusivity, demand, causal effect or catalogue growth. Missing genre, country, language, IMDb, Rotten Tomatoes and runtime fields must be reported with clear denominators. Public release requires separate licensing, visual inspection, reproducibility and security gates.

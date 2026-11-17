@@ -1,7 +1,9 @@
-"""Local Streamlit dashboard: streamlit run streaming_library/dashboard.py"""
 from __future__ import annotations
 
 from pathlib import Path
+import json
+
+from streaming_library.final_research import verify_methods, load_rows
 
 from streaming_library.integrated import (
     PLATFORMS, describe_selection, filter_ids, load_project,
@@ -70,6 +72,23 @@ def main():
                    'platforms':', '.join(sorted(memberships[mid])), 'genre_count':len(genres[mid])}
                   for mid in ids[:100]], width="stretch",hide_index=True)
     st.caption(f'Preview displays up to 100 of {len(ids):,} selected records. No raw dataset is transmitted by the analysis code; local Streamlit configuration determines deployment behavior.')
+    st.divider()
+    st.subheader('Historical full-snapshot attribution and genre sensitivity')
+    st.caption('These Phase 07 measures apply to the FULL historical dataset, independently of the sidebar selection above. They are not dynamically recomputed for filters.')
+    try:
+        verify_methods(root)
+        folder = root / 'outputs' / 'phase07_methods'
+        contributions = load_rows(folder/'shapley_attribution.csv', {'platform','exclusive_movies','shapley_allocated_movies'})
+        entropy = load_rows(folder/'genre_entropy_sensitivity.csv', {'platform','allocation_method','effective_genres_shannon'})
+        st.bar_chart({r['platform']:float(r['shapley_allocated_movies']) for r in contributions}, horizontal=True)
+        st.caption('Shapley movie equivalents allocate each overlapping source record fractionally; not commercial market share.')
+        st.dataframe([{'Platform':r['platform'], 'Allocation rule':r['allocation_method'],
+                       'Effective Shannon genres':round(float(r['effective_genres_shannon']),3)}
+                      for r in entropy],width="stretch",hide_index=True)
+        st.caption('Genre diversity depends on fractional-movie versus full-tag weighting. Consult docs/phase07_methods.md for definitions.')
+    except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
+        st.info('Phase 07 full-snapshot outputs are unavailable or invalid: ' + str(exc))
+
 
 
 if __name__ == '__main__':

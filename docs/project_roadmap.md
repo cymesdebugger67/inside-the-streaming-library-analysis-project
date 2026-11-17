@@ -2,40 +2,33 @@
 
 **Project owner:** Cyril James Lunzaga
 
-## Research direction
+## Research controls
 
-Understand historical streaming movie catalogue composition, overlap, marginal coverage, genre diversity, and metadata completeness. Preserve the unverified historical snapshot-date limitation and distinguish descriptive source-level comparisons from external inference.
+An undated, archived movie membership snapshot. Film release year is not catalogue-entry date. Platform flags overlap, genre and metadata labels can be multi-valued, and the source is not a probability sample. No causal, current-availability, viewer-demand, subscriber or market-share inference is justified. Retain raw checksum and stage fingerprints.
 
-## Progress as of 2026-11-17
+## Verified implementation checkpoints (17 November 2026)
 
 | Milestone | Scope | State |
 |---|---|---|
-| 00 | Repository and Git baseline | Local baseline verified; release not finalized |
-| 01 | Acquisition, source fingerprint and provenance | Completed; independently reviewed |
-| 02 | Three-grain preparation, parsing and data QA | Completed; independently reviewed |
-| 03 | Descriptive feature engineering, EDA and five figures | Completed; reviewed, final visual polish pending |
-| 04 | Directional overlap, genre diversity and stratified comparisons | Completed; reviewed, final visual polish pending |
-| 05 | Country/language quality and feature extraction, advanced analyses | Planned |
-| 06 | Research notebook, interactive exploration and report | Planned |
-| 07 | Full rerun, tests, security, licensing and controlled Git publication | Pending |
+| 00 | Git baseline and source viability | Implemented and reviewed |
+| 01 | Historical CSV schema, provenance, SHA-256 | Reviewed |
+| 02 | Movie, platform membership, genre grains; QA | Reviewed |
+| 03 | EDA and statistical descriptives | Reviewed |
+| 04 | Overlap asymmetry, fractional Simpson, metric completeness | Reviewed |
+| 05 | Country/language metadata and corrected `None` treatment | Reviewed; patch pushed to feature branch |
+| 06 | Integrated notebook, Streamlit dashboard, report | 67-test checkpoint and user execution passed; feature branch commit `fe6d1bd` |
+| 07A | Exact Shapley, Shannon weighting, equal-size resampling | 79 tests, output hash and independent table review passed; feature branch commit `fa5dfa7` |
+| 07B | Comprehensive source-grounded report and documentation alignment | Implementation candidate; awaiting local execution and review |
+| 07C | Clean-room rerun, dashboard/notebook signoff, licensing/security, Git release | Pending |
 
-The 38-test suite passed during the Phase 04 local execution and separately from the uploaded source review. This is not yet a final code, visualization or publication sign-off.
+## Release gates
 
-## Non-negotiable research controls
+1. Run the full pipeline on the exact fingerprinted raw CSV and inspect hashes, outputs and the final generated report.
+2. Verify the notebook's **Run All** after the Phase 07 extensions and interact with the dashboard's full-snapshot panel and prior filters.
+3. Inspect README, data provenance and redistribution rights; the source must not be committed or included in public release bundles without authorization.
+4. Review file inventory for secrets, caches, generated raw data and archival extracts; verify ownership credit **Cyril James Lunzaga**.
+5. Stage and review intentional source/docs only; commit/push the feature branch, then merge to `main` only after release signoff.
 
-- One row per source ID for movies, distinct platform-membership and genre-assignment tables
-- Explicit denominators for overlapping platforms and multi-label tags
-- Missing rating and runtime observations are not imputed or interpreted as zero
-- Release year is not the platform-listing or catalogue-entry date
-- No statements about present-day availability, viewing behavior, subscriptions, causal effects or market share
-- Statistical comparisons and feature selection only when there is a defensible question, sampling caveat and evaluation design
-- Preserve original input fingerprints and stage-level output hashes
-- Public authorship credits Cyril James Lunzaga
+## Design decisions
 
-## Next checkpoints
-
-1. Repair the inherited README, stale Netflix-specific entry point, dependency specification, source field count and starter notebook.
-2. Review the repository diff and ensure raw data, caches and generated outputs remain Git-ignored.
-3. Create a controlled milestone commit **only after** these repairs pass review; separately decide when to push.
-4. Design Phase 05 based on documented country/language tokenization and a specific analytic question, rather than on folder count.
-5. Consolidate reviewed visuals, analytical findings, notebook, data dictionary and end-to-end reproducibility instructions before final publication.
+Exact Shapley accounts for overlapping source coverage; leave-one-out exclusivity remains distinct. Shannon effective diversity under fractional and full-tag weights and deterministic equal-size draws are implemented. Proposed title-bootstrap confidence intervals and predictive membership modelling are deliberately excluded from the final study because sampling and target validity do not support the intended external interpretations. Release-year matching remains a potential descriptive extension but not a mandatory claim; genre sensitivity is explicitly shown instead. Do not represent omitted methods as completed.
